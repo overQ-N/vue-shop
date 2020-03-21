@@ -65,14 +65,13 @@ export default {
       this.$refs.loginFormRef.validate(async valid => {
         if (valid) {
           const { data: res } = await this.$axios.post('login', this.loginForm);
-          console.log(res);
           if (res.meta.status !== 200) {
             this.$message.error(res.meta.msg)
             return false;
           }
           this.$message.success(res.meta.msg);
           sessionStorage.setItem('vue_shop_token', res.data.token)
-          this.$router.push('/home');
+          this.$router.push({ name: 'Home', params: { uid: res.data.id } });
         }
       });
     }
