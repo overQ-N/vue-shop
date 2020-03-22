@@ -17,7 +17,7 @@ const routes = [
     name: 'Home',
     redirect: '/welcome',
     children: [
-      { path: '/welcome', component: Welcome },
+      { path: '/welcome', component: Welcome, name: 'Welcome' },
       { path: '/users', component: User },
       { path: '/roles', component: Roles },
       { path: '/rights', component: Rights }

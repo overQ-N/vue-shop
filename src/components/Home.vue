@@ -72,8 +72,10 @@ export default {
     };
   },
   created () {
-    this.getUserInfo();
     this.getrights()
+  },
+  mounted () {
+    this.getUserInfo();
   },
   methods: {
     async getrights () {
@@ -139,7 +141,9 @@ export default {
         color #fff
       .el-menu-item
         padding 0 15px
-  .main
-    text-align left!important
-    color #fff      
+  .el-main
+    min-width 1360px
+  // .main
+  //   text-align left!important
+  //   color #fff      
 </style>
