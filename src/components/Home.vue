@@ -121,6 +121,7 @@ export default {
       width: 200px
       justify-content: space-between
       align-items: center
+      color #fff
 
       img
         width: 40px
@@ -142,7 +143,7 @@ export default {
       .el-menu-item
         padding 0 15px
   .el-main
-    min-width 1360px
+    min-width 1200px
   // .main
   //   text-align left!important
   //   color #fff      

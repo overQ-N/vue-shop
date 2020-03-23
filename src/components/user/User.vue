@@ -30,14 +30,20 @@
         <!-- </el-table-column> -->
         <el-table-column label="手机号码" prop="mobile"></el-table-column>
         <el-table-column label="邮箱" prop="email"></el-table-column>
-        <el-table-column label="状态" prop="mg_state">
+        <el-table-column label="状态" prop="mg_state" width="80">
           <template slot-scope="scope">
             <el-switch v-model="scope.row.mg_state" @change="changUserState(scope.row)"></el-switch>
           </template>
         </el-table-column>
-        <el-table-column label="操作">
+        <el-table-column label="操作" width="180">
           <template slot-scope="scope">
-            <el-tooltip class="item" effect="dark" content="编辑用户" placement="top" :enterable='false'>
+            <el-tooltip
+              class="item"
+              effect="dark"
+              content="编辑用户"
+              placement="top"
+              :enterable="false"
+            >
               <el-button
                 size="mini"
                 icon="el-icon-edit"
@@ -45,17 +51,34 @@
                 type="primary"
               ></el-button>
             </el-tooltip>
-            <el-tooltip class="item" effect="dark" content="删除用户" placement="top" :enterable='false'>
-            <el-button
-              size="mini"
-              icon="el-icon-delete"
-              @click="showDel(scope.row)"
-              type="danger"
-              :id="scope.row.id"
-            ></el-button>
+            <el-tooltip
+              class="item"
+              effect="dark"
+              content="删除用户"
+              placement="top"
+              :enterable="false"
+            >
+              <el-button
+                size="mini"
+                icon="el-icon-delete"
+                @click="showDel(scope.row)"
+                type="danger"
+                :id="scope.row.id"
+              ></el-button>
             </el-tooltip>
-            <el-tooltip class="item" effect="dark" content="设置权限" placement="top" :enterable=false>
-            <el-button size="mini" icon="el-icon-setting" type="warning" :id="scope.row.id"></el-button>
+            <el-tooltip
+              class="item"
+              effect="dark"
+              content="分配角色"
+              placement="top"
+              :enterable="false"
+            >
+              <el-button
+                size="mini"
+                icon="el-icon-setting"
+                type="warning"
+                @click="showSetRoleDialog(scope.row)"
+              ></el-button>
             </el-tooltip>
           </template>
         </el-table-column>
@@ -121,13 +144,37 @@
         <el-button type="primary" @click="editUser">确 定</el-button>
       </span>
     </el-dialog>
-    <!-- <el-dialog title="确认删除" :visible.sync='delDialogVisible' width="30%"> 
-      <span icon='el-icon-delete'>该操作将永久删除该用户，是否继续？</span>
-       <span slot="footer" class="dialog-footer">
-        <el-button @click="delDialogVisible = false">取 消</el-button>
-        <el-button type="primary" @click="delUser">确 定</el-button>
+    <!-- 分配角色的对话框 -->
+    <el-dialog class="setRoleDialog" title="分配角色" 
+    :visible.sync="setRoleDialog" 
+    @close='resetRoleDialog'
+    width="40%">
+      <div class="RoleDialogInp">
+        <div>
+          当前的用户：
+          <el-input v-model="roleInfo.username" :disabled="true"></el-input>
+        </div>
+        <div>
+          当前的角色：
+          <el-input v-model="roleInfo.role_name" :disabled="true"></el-input>
+        </div>
+        <div>
+          分配新角色：
+        <el-select v-model="roleID" placeholder="请选择">
+    <el-option
+      v-for="item in roleList"
+      :key="item.id"
+      :label="item.roleName"
+      :value="item.id">
+    </el-option>
+  </el-select>
+        </div>
+      </div>
+      <span slot="footer" class="dialog-footer">
+        <el-button @click="setRoleDialog = false">取 消</el-button>
+        <el-button type="primary" @click="setRole">确 定</el-button>
       </span>
-    </el-dialog>-->
+    </el-dialog>
   </div>
 </template>
 <script>
@@ -197,7 +244,15 @@ export default {
         id: '',
         email: '',
         mobile: ''
-      }
+      },
+      // 控制分配角色对话框的显示与否
+      setRoleDialog: false,
+      // 显示分配角色时表单数据
+      roleInfo: {},
+      // 所有角色列表
+      roleList: [],
+      // 分配角色当前选中的角色id
+      roleID: ''
     };
   },
   mounted () {
@@ -210,7 +265,9 @@ export default {
       });
       // // =====================
       // console.log(res)
-      if (res.meta.status !== 200) { return this.$message.error('获取用户列表失败'); }
+      if (res.meta.status !== 200) {
+        return this.$message.error('获取用户列表失败');
+      }
       this.userList = res.data.users;
       this.total = res.data.total;
     },
@@ -254,7 +311,9 @@ export default {
     async showEdit (userinfo) {
       this.editDialogVisible = true;
       const { data: res } = await this.$axios.get('users/' + userinfo.id);
-      if (res.meta.status !== 200) { return this.$message.error('获取用户数据失败'); }
+      if (res.meta.status !== 200) {
+        return this.$message.error('获取用户数据失败');
+      }
       this.editForm = res.data;
     },
     // 编辑用户
@@ -297,8 +356,28 @@ export default {
           });
         });
     },
-    // 删除用户
-    delUser () {}
+    // 显示分配角色对话框
+    async showSetRoleDialog (roleInfo) {
+      this.setRoleDialog = true;
+      this.roleInfo = roleInfo;
+      const { data: res } = await this.$axios.get('roles')
+      if (res.meta.status !== 200) return this.$message.error('获取数据失败')
+      this.roleList = res.data
+    },
+    // 点击确认，分配角色
+    async setRole () {
+      if (!this.roleID) return this.$message.info('请选择要分配的角色')
+      const { data: res } = await this.$axios.put(`users/${this.roleInfo.id}/role`, { rid: this.roleID })
+      if (res.meta.status !== 200) return this.$message.error(res.meta.msg)
+      this.getUserList()
+      this.$message.success('更新用户成功')
+      this.setRoleDialog = false
+    },
+    // 分配角色对话框关闭时，重置下拉框信息
+    resetRoleDialog () {
+      this.roleInfo = {};
+      this.roleID = ''
+    }
   },
   watch: {
     dialogVisible (val) {
@@ -308,6 +387,16 @@ export default {
 };
 </script>
 <style lang="stylus" scoped>
+.setRoleDialog
+  text-align: left
+  .RoleDialogInp
+    font-size 16px
+    .el-select
+      margin 4px
+    .el-input
+      width 70%
+      margin 4px
+
 .el-table
   margin-top: 10px
 
