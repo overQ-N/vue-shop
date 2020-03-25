@@ -220,10 +220,8 @@ export default {
         cancelButtonText: '取消',
         type: 'warning'
       }).then(async () => {
-        console.log(role, rightsId)
         const { data: res } = await this.$axios.delete(`roles/${role.id}/rights/${rightsId}`)
         if (res.meta.status !== 200) return this.$message.error('删除权限失败')
-        console.log(res.data)
         role.children = res.data
         this.$message({
           type: 'success',

@@ -45,7 +45,7 @@
             <el-menu-item :index="'/'+subItem.path" v-for="(subItem) in item.children" :key="subItem.id">
                 <i class="el-icon-menu"></i>
                 <span>{{subItem.authName}}</span>
-            </el-menu-item>
+            </el-menu-item>           
           </el-submenu>
         </el-menu>
       </el-aside>
