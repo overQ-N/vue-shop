@@ -1,12 +1,19 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import Login from '../components/Login.vue'
-import Home from '../components/Home.vue'
-import User from '../components/user/User.vue'
-import Roles from '../components/rights/Roles.vue'
-import Rights from '../components/rights/Rights.vue'
-import Welcome from '../components/Welcome.vue'
-import Categories from '../components/goods/Catagories.vue'
+// import Login from '../components/Login.vue'
+// import Home from '../components/Home.vue'
+// import User from '../components/user/User.vue'
+// import Roles from '../components/rights/Roles.vue'
+// import Rights from '../components/rights/Rights.vue'
+// import Welcome from '../components/Welcome.vue'
+// import Categories from '../components/goods/Catagories.vue'
+const Login = () => import(/* webpackChunkName: "login_home_welcom" */ '../components/Login.vue')
+const Home = () => import(/* webpackChunkName: "login_home_welcom" */ '../components/Home.vue')
+const Welcome = () => import(/* webpackChunkName: "login_home_welcom" */ '../components/Welcome.vue')
+const User = () => import(/* webpackChunkName: "user" */ '../components/user/User.vue')
+const Roles = () => import(/* webpackChunkName: "rights" */ '../components/rights/Roles.vue')
+const Rights = () => import(/* webpackChunkName: "rights" */ '../components/rights/Rights.vue')
+const Categories = () => import(/* webpackChunkName: "Cate" */ '../components/goods/Catagories.vue')
 Vue.use(VueRouter)
 
 const routes = [
