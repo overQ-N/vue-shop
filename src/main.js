@@ -13,10 +13,19 @@ import 'quill/dist/quill.core.css' // import styles
 import 'quill/dist/quill.snow.css' // for snow theme
 import 'quill/dist/quill.bubble.css' // for bubble theme
 
+// 导入nprogress
+import NProgress from 'nprogress'
+import 'nprogress/nprogress.css'
+
 import axios from 'axios'
 axios.defaults.baseURL = 'http://127.0.0.1:8888/api/private/v1/'
 axios.interceptors.request.use(function (config) {
+  NProgress.start()
   config.headers.Authorization = sessionStorage.getItem('vue_shop_token')
+  return config
+})
+axios.interceptors.response.use(function (config) {
+  NProgress.done()
   return config
 })
 Vue.config.productionTip = false

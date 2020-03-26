@@ -1,8 +1,3 @@
-/*!
- * 模板自动生成
- */
-
-// jshint ignore: start
 
 const rawCitiesData = [
   {
@@ -16911,15 +16906,4 @@ const rawCitiesData = [
     ]
   }
 ]
-
-// jshint ignore: end
-
-// function init(that) {
-//   that.setData({
-//     cityData: rawCitiesData
-//   });
-// }
 export default rawCitiesData
-// module.exports = {
-//   init: init
-// }

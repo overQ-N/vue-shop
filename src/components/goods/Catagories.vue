@@ -24,7 +24,7 @@
         :show-row-hover="false"
         class="tree-table"
       >
-        <template slot="cat_deleted" scope="scope">
+        <template #default='scope'>
           <el-button
             size="mini"
             type="success"
@@ -34,12 +34,12 @@
           ></el-button>
           <el-button size="mini" type="danger" icon="el-icon-delete" circle v-else></el-button>
         </template>
-        <template slot="cat_level" scope="scope">
+        <template #default="scope">
           <el-tag v-if="scope.row.cat_level===0">一级</el-tag>
           <el-tag v-else-if="scope.row.cat_level===1" type="success">二级</el-tag>
           <el-tag type="warning" v-else>三级</el-tag>
         </template>
-        <template slot="setting" scope="scope">
+        <template #default="scope">
           <el-button size="mini" type="primary" icon="el-icon-edit" @click="showEditCate(scope.row)">编辑</el-button>
           <el-button size="mini" type="danger" icon="el-icon-delete" @click="delCate(scope.row)">删除</el-button>
         </template>
@@ -293,7 +293,6 @@ export default {
     // 编辑分类
     editCate () {
       this.$refs.editCateFormRef.validate(async valid => {
-        console.log(valid)
         if (!valid) return false
         const { data: res } = await this.$axios.put(`categories/${this.newCate.cat_id}`,
           { cat_name: this.newCate.cat_name })

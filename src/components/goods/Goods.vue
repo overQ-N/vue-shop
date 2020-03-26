@@ -76,7 +76,6 @@ export default {
       if (res.meta.status !== 200) return this.$message.error('获取数据失败');
       this.total = res.data.total;
       this.goods = res.data.goods;
-      console.log('goods', this.goods);
     },
     // 分布 每页条数
     handleSizeChange(newSize) {
