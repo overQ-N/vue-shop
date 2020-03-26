@@ -3,6 +3,7 @@ import App from './App.vue'
 import router from './router'
 import './assets/styles/global.styl'
 import './assets/font/iconfont.css'
+import './plugins/element.js'
 // 树形组件
 import TreeTable from 'vue-table-with-tree-grid'
 
