@@ -1,5 +1,6 @@
 # vue-shop
-
+# 示例网站 http://47.115.48.144/ 
+## 帐户 admin 123456 请不要随意删除数据
 ## Project setup
 ```
 npm install
