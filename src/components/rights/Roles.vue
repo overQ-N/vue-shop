@@ -19,7 +19,7 @@
         :default-sort="{prop: 'roleName', order: 'descending'}"
         style="width: 100%"
       >
-        <el-table-column type="expand" width="180">
+        <el-table-column type="expand" width="180" label="展开查看权限">
           <template slot-scope="scope">
            <el-row class="vcenter" v-for="(item1, index) in scope.row.children" :key="index" :class="['bb',index===0?'bt':'']">
             <!-- 一级权限列表 -->

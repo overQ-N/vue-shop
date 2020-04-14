@@ -2,7 +2,7 @@
   <div>
     <!-- 导航 -->
     <el-breadcrumb separator-class="el-icon-arrow-right">
-      <el-breadcrumb-item :to="{ path: '/welcome' }">首页</el-breadcrumb-item>
+      <el-breadcrumb-item :to="{ path: '/home' }">首页</el-breadcrumb-item>
       <el-breadcrumb-item>商品管理</el-breadcrumb-item>
       <el-breadcrumb-item>商品分类</el-breadcrumb-item>
     </el-breadcrumb>
@@ -24,7 +24,7 @@
         :show-row-hover="false"
         class="tree-table"
       >
-        <template #default='scope'>
+        <template #cat_deleted='scope'>
           <el-button
             size="mini"
             type="success"
@@ -34,12 +34,12 @@
           ></el-button>
           <el-button size="mini" type="danger" icon="el-icon-delete" circle v-else></el-button>
         </template>
-        <template #default="scope">
+        <template #cat_level="scope">
           <el-tag v-if="scope.row.cat_level===0">一级</el-tag>
           <el-tag v-else-if="scope.row.cat_level===1" type="success">二级</el-tag>
           <el-tag type="warning" v-else>三级</el-tag>
         </template>
-        <template #default="scope">
+        <template #setting="scope">
           <el-button size="mini" type="primary" icon="el-icon-edit" @click="showEditCate(scope.row)">编辑</el-button>
           <el-button size="mini" type="danger" icon="el-icon-delete" @click="delCate(scope.row)">删除</el-button>
         </template>

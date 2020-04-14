@@ -9,13 +9,13 @@ import VueRouter from 'vue-router'
 // import Categories from '../components/goods/Catagories.vue'
 const Login = () => import(/* webpackChunkName: "login_home_welcom" */ '../components/Login.vue')
 const Home = () => import(/* webpackChunkName: "login_home_welcom" */ '../components/Home.vue')
-const Welcome = () => import(/* webpackChunkName: "login_home_welcom" */ '../components/Welcome.vue')
+// const Welcome = () => import(/* webpackChunkName: "login_home_welcom" */ '../components/Welcome.vue')
 const User = () => import(/* webpackChunkName: "user" */ '../components/user/User.vue')
 const Roles = () => import(/* webpackChunkName: "rights" */ '../components/rights/Roles.vue')
 const Rights = () => import(/* webpackChunkName: "rights" */ '../components/rights/Rights.vue')
 const Categories = () => import(/* webpackChunkName: "Cate" */ '../components/goods/Catagories.vue')
 Vue.use(VueRouter)
-
+// { path: '/welcome', component: Welcome, name: 'Welcome' },
 const routes = [
   { path: '/', redirect: '/login' },
   { path: '/login', component: Login, name: 'Login' },
@@ -23,10 +23,10 @@ const routes = [
     path: '/Home',
     component: Home,
     name: 'Home',
-    redirect: '/welcome',
+    redirect: '/users',
     children: [
-      { path: '/welcome', component: Welcome, name: 'Welcome' },
-      { path: '/users', component: User },
+    
+      { path: '/users', component: User, name: 'User' },
       { path: '/roles', component: Roles },
       { path: '/rights', component: Rights },
       { path: '/categories', component: Categories },

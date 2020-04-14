@@ -14,7 +14,7 @@ import VueQuillEditor from 'vue-quill-editor'
 import NProgress from 'nprogress'
 
 import axios from 'axios'
-axios.defaults.baseURL = 'http://127.0.0.1:8888/api/private/v1/'
+axios.defaults.baseURL = 'http://47.115.48.144:3000/api/private/v1/'
 axios.interceptors.request.use(function (config) {
   NProgress.start()
   config.headers.Authorization = sessionStorage.getItem('vue_shop_token')

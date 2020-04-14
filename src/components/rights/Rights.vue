@@ -13,6 +13,9 @@
       border
       stripe
       style="width: 100%">
+       <el-table-column type="index" label="序号" width="120">
+
+      </el-table-column>
       <el-table-column
         prop="authName"
         label="权限名称"
@@ -21,23 +24,24 @@
       <el-table-column
         prop="path"
         label="路径"
-        width="180"
+        
         >
       </el-table-column>
       <el-table-column
         prop="level"
         label="等级"
-        width="180">
+        >
         <template slot-scope='scope'>
          <el-tag type="primary" v-if="scope.row.level === '0'">一级</el-tag>
          <el-tag type="success" v-else-if="scope.row.level === '1'">二级</el-tag>
          <el-tag type="warning" v-else>三级</el-tag>
         </template>
       </el-table-column>
-      <el-table-column
+      <!-- <el-table-column
         label="操作"
         >
-      </el-table-column>
+
+      </el-table-column> -->
     </el-table>
     </el-card>
   </div>

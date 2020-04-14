@@ -71,7 +71,7 @@ export default {
           }
           this.$message.success(res.meta.msg);
           sessionStorage.setItem('vue_shop_token', res.data.token)
-          this.$router.push({ name: 'Welcome', params: { uid: res.data.id } });
+          this.$router.push({ name: 'User', params: { uid: res.data.id } });
         }
       });
     }
