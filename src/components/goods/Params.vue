@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="container">
     <!-- 导航 -->
     <el-breadcrumb separator-class="el-icon-arrow-right">
       <el-breadcrumb-item :to="{ path: '/home' }">首页</el-breadcrumb-item>
@@ -9,9 +9,10 @@
     <el-card>
       <el-alert title="注意,只能修改第三级分类的相关参数" type="warning" :closable="false" show-icon></el-alert>
       <el-row>
-        <el-col>
+        <el-col :span="7">
           <span>选择商品的分类 :</span>
           <el-cascader
+            size='small'
             v-model="selectedKey"
             :options="categories"
             :props="cascaderProp"
@@ -30,7 +31,7 @@
       </el-tabs>
       <el-table border stripe 
       :data="activeName==='many'?manyTableData:onlyTableData">
-        <el-table-column type="expand" >
+        <el-table-column type="expand" label="修改参数属性" width="180">
           <template v-slot='scope'>
             <el-tag v-for="(item, index) in scope.row.attr_vals" :key="index" closable @close="delTagParams(scope.row,index)">{{item}}</el-tag>
             <el-input
@@ -161,6 +162,9 @@ export default {
     },
     // 获取分类属性
     async getAttr() {
+      if (this.selectedKey.length === 0) {
+        return this.$message.warning('请选择商品分类')
+      }
       // 如果选择了第三级分类 通过切换tag来获取动态参数或静态属性
       const { data: res } = await this.$axios.get(
         `categories/${this.cateId}/attributes`,
@@ -315,6 +319,8 @@ export default {
 </script>
 
 <style lang='stylus' scoped>
+.container
+  text-align left
 .el-alert
   margin-bottom: 15px
 
@@ -325,4 +331,5 @@ export default {
     margin: 0 4px
   .input-new-tag
     width 100px
+
 </style>

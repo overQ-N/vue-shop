@@ -21,6 +21,7 @@
         <el-table-column type="index" label="序号" width="90"></el-table-column>
         <el-table-column prop="goods_name" label="商品名称"></el-table-column>
         <el-table-column prop="goods_price" label="商品价格" width="90"></el-table-column>
+        <el-table-column prop="goods_number" label="商品数量" width="90"></el-table-column>
         <el-table-column prop="goods_weight" label="商品重量" width="90"></el-table-column>
         <el-table-column  label="创建时间" width="180">
           <template #default="props">
@@ -39,7 +40,7 @@
       @size-change="handleSizeChange"
       @current-change="handleCurrentChange"
       :current-page="searchObj.pagenum"
-      :page-sizes="[2, 5, 10, 20]"
+      :page-sizes="[20, 40, 60, 80]"
       :page-size="searchObj.pagesize"
       layout="total, sizes, prev, pager, next, jumper"
       :total="total">
@@ -56,7 +57,7 @@ export default {
       searchObj: {
         query: '',
         pagenum: 1,
-        pagesize: 2
+        pagesize: 20
       },
       // 总数据条数
       total: 0,
@@ -126,5 +127,6 @@ export default {
 
   .el-table
     margin-top 15px
-
+/deep/ .el-scrollbar
+  height auto
 </style>
